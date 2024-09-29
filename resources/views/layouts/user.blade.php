@@ -16,51 +16,46 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
+    <script src="https://kit.fontawesome.com/172c0c285b.js" crossorigin="anonymous"></script>
 </head>
 <body class="font-sans antialiased">
 <div class="min-h-screen bg-gray-100">
-    @include('layouts.admin-navigation')
-
-    <!-- Page Heading -->
-    @if (isset($header))
-        <header class="bg-white shadow">
-            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                {{ $header }}
-            </div>
-        </header>
-    @endif
+    @auth
+    @include('layouts.user-navigation')
+    @else
+        @include('layouts.guest-navigation')
+    @endauth
 
     <!-- Page Content -->
     <main>
         {{ $slot }}
     </main>
 
-    <script>
-        toastr.options = {
-            "closeButton": true,
-            "newestOnTop": false,
-            "progressBar": true,
-            "preventDuplicates": false,
-            "onclick": null,
-            "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "5000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-        }
-        @if(Session::has('success'))
-        toastr.success("{{ Session::get('success') }}");
-        @endif
-
-        @if(Session::has('error'))
-        toastr.error("{{ Session::get('error') }}");
-        @endif
-
-    </script>
 </div>
+<script>
+    toastr.options = {
+        "closeButton": true,
+        "newestOnTop": false,
+        "progressBar": true,
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+    @if(Session::has('success'))
+    toastr.success("{{ Session::get('success') }}");
+    @endif
+
+    @if(Session::has('error'))
+    toastr.error("{{ Session::get('error') }}");
+    @endif
+
+</script>
 </body>
 </html>

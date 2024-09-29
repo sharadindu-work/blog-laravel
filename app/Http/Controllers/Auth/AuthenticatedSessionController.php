@@ -45,4 +45,25 @@ class AuthenticatedSessionController extends Controller
 
         return redirect('/');
     }
+
+    /**
+     * Display the login view.
+     */
+    public function UserCreate(): View
+    {
+        return view('auth.user-login');
+    }
+
+    /**
+     * Handle an incoming authentication request.
+     */
+    public function UserStore(LoginRequest $request): RedirectResponse
+    {
+
+        $request->authenticate();
+
+        $request->session()->regenerate();
+
+        return redirect()->intended(RouteServiceProvider::USER_HOME);
+    }
 }
