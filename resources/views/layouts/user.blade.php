@@ -20,8 +20,13 @@
 </head>
 <body class="font-sans antialiased">
 <div class="min-h-screen bg-gray-100">
+
     @auth
-    @include('layouts.user-navigation')
+        @if(in_array("user", auth()->user()->getRoleNames()->toArray()))
+            @include('layouts.user-navigation')
+        @else
+            @include('layouts.admin-navigation')
+        @endif
     @else
         @include('layouts.guest-navigation')
     @endauth

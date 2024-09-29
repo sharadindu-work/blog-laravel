@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\User\StorecommentRequest;
+use App\Http\Requests\User\StoreCommentRequest;
 use App\Http\Requests\User\UpdateCommentRequest;
 use App\Models\Comment;
+use App\Models\Post;
 
-class CommentController extends Controller
+class UserCommentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -28,9 +29,13 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorecommentRequest $request)
+    public function store(StoreCommentRequest $request, Post $post)
     {
-        //
+        $request['post_id'] = $post->id;
+        $request['user_id'] = auth()->user()->id;
+        Comment::create($request->all());
+        session()->flash('success', __('Comment created successfully'));
+        return redirect()->back();
     }
 
     /**

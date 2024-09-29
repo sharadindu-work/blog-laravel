@@ -14,7 +14,7 @@ class HomeController extends Controller
     }
 
     public function details(Post $post){
-        $post->load(['user', 'comments']);
+        $post->load(['user', 'comments', 'comments.user']);
 
         return view('page.post.details', compact('post'));
 
